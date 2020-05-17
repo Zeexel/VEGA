@@ -1,0 +1,255 @@
+{
+    "en": {
+
+        "CREDIT": "James P. [Zeexel]",
+        "NOTES": "This is the default translation for VEGA.",
+
+        "errmsg": {
+            "cmdNotFound": "Sorry, I wasn't able to find that command.",
+            "cmdDisabled": "I apologize, but that command has been disabled for the time being.",
+            "cmdDMDisabled": "I apologize, but that command is disabled in DM channels.",
+            "cmdNSFWErr": "This command can only be used in NSFW channels!",
+            "cmdInvalidParam": "There was an error in your input.",
+            "cmdNoPerms": "You dont have permission to use this command.",
+            "cmdError": "It seems there was an error running your command. Try again or contact the owner of the bot.",
+            "nsfwNoRes": "I apologize, but I wasn't able to find anything with the tag(s) "
+        },
+
+        "eightballRes": {
+            "1": "Yes.",
+            "2": "According to the research done by the UAC, it is without a doubt.",
+            "3": "It is certain.",
+            "4": "You may rely on it.",
+            "5": "Our resarch points to.. Yes!",
+            "6": "Outlook good!",
+            "7": "No.",
+            "8": "Don't count on it.",
+            "9": "I'm very doubtful on that.",
+            "10": "Research concluded negative.",
+            "11": "I'm a bit busy at the moment..",
+            "12": "It's best if I don't tell you now.",
+            "13": "What? I wasn't paying attention.",
+            "14": "Ask me again later, please."
+        },
+
+        "headsTails": {
+            "1": "You landed heads.",
+            "2": "You got heads!",
+            "3": "The coin landed on heads.",
+            "4": "You landed tails.",
+            "5": "You got tails!",
+            "6": "The coin landed on tails."
+        },
+
+        "generalRes" : {
+            "coinFlipping": "Flipping..",
+            "loveCalcFinal": "The final result of my calculation was",
+            "loveCalculating": "Calculating..",
+            "reddFooter": "If the image isn't showing up, click the title!",
+            "ping": "Pong!",
+            ""
+        }
+    },
+
+
+
+    "es": {
+        "CREDIT": "@fewwet and @megasmatey on Twitter",
+        "NOTE": "VEGA Taco Edition ~TudoXela 2020",
+
+        "errmsg": {
+            "cmdNotFound": "Lo siento, yo no era capaz a encontrar esto comand.",
+            "cmdDisabled": "Lo siento, pero está la mandar ha sido discapacitado por el momento.",
+            "cmdDMDisabled": "Lo siento, pero está la mandar es discapacitado en DM canales.",
+            "cmdNSFWErr": "¡Esto mandar sólo puede ser usado en NSFW canales!",
+            "cmdInvalidParam": "Ahí fuera un error en tu entrada.",
+            "cmdNoPerms": "No tiene permiso a usar esto mandar.",
+            "cmdError": "Lo parece ahí fue un error corriendo tu mandar. Volver a intentar o contacto el dueño de el bot.",
+            "nsfwNoRes": "Lo siento, pero yo no estaba puedo a encontrar nada con el etiqueta(s)"
+        },
+
+        "eightballRes": {
+            "1": "Sí.",
+            "2": "Según a la investigación listo por el UAC, es sin una duda.",
+            "3": "Es seguro.",
+            "4": "Tú puedes confiar en ellos.",
+            "5": "Nuestro investigación puntos a... sí!",
+            "6": "¡Perspectiva buena!",
+            "7": "No.",
+            "8": "No contar en lo.",
+            "9": "Soy muy dudoso en esto.",
+            "10": "Investigación incluyen negativo.",
+            "11": "Soy un poco ocupado en el momento..",
+            "12": "Es mejor si yo no digo tú ahora.",
+            "13": "¿Qué? No era pagando atención.",
+            "14": "Pregúntame más tarde, por favor."
+        },
+
+        "headsTails": {
+            "1": "Tú aterrizó águilas.",
+            "2": "¡Tú conseguiste águilas!",
+            "3": "La moneda aterrizó en águilas.",
+            "4": "Tú aterrizó sols.",
+            "5": "¡Tú conseguiste sols!",
+            "6": "La moneda aterrizó en sols."
+        },
+
+        "generalRes" : {
+            "coinFlipping": "Malito una moneda..",
+            "loveCalcFinal": "El final resultado de mi cálculo fue",
+            "loveCalculating": "Calculando..",
+            "reddFooter": "Si el imagen no está mostrando arriba, clic en el título.",
+            "ping": "Pong!"
+        }
+    },
+
+    "fr": {
+        "CREDIT": "@Sckwint on twitter",
+
+        "errmsg": {
+            "cmdNotFound": "Désolé, je ne peut pas trouver cette commandement.",
+            "cmdDisabled": "Je suis désolé, mais cet commandement est désactivé pour maintenant.",
+            "cmdDMDisabled": "Je suis désolé, mais cet commandement est désactivé pour les messages directs.",
+            "cmdNSFWErr": "Cette commandemant est pour les voies NSFW seulement!",
+            "cmdInvalidParam": "Il y avait une erreur dedans ta entrée.",
+            "cmdNoPerms": "Tu n'a pas la permission d'utiliser cet commandement.",
+            "cmdError": "Il-y-avait une erreur pour exécuter votre commandement, essay une autre fois ou contacte le propriétaire de la bot.",
+            "nsfwNoRes": "Je suis désolé, mais je ne pouvait pas trouver aucune résultat avec les tags"
+        },
+
+        "eightballRes": {
+            "1": "Yes.",
+            "2": "According to the research done by the UAC, it is without a doubt.",
+            "3": "It is certain.",
+            "4": "You may rely on it.",
+            "5": "Our resarch points to.. Yes!",
+            "6": "Outlook good!",
+            "7": "No.",
+            "8": "Don't count on it.",
+            "9": "I'm very doubtful on that.",
+            "10": "Research concluded negative.",
+            "11": "I'm a bit busy at the moment..",
+            "12": "It's best if I don't tell you now.",
+            "13": "What? I wasn't paying attention.",
+            "14": "Ask me again later, please."
+        },
+
+        "headsTails": {
+            "1": "You landed heads.",
+            "2": "You got heads!",
+            "3": "The coin landed on heads.",
+            "4": "You landed tails.",
+            "5": "You got tails!",
+            "6": "The coin landed on tails."
+        },
+
+        "generalRes" : {
+            "coinFlipping": "Flipping..",
+            "loveCalcFinal": "The final result of my calculation was ",
+            "loveCalculating": "Calculating..",
+            "reddFooter": "If the image isn't showing up, click the title!",
+            "ping": "Pong! "
+        }
+    },
+
+    "ru": {
+
+        "CREDIT": "MiniBuka1",
+        "NOTES": "HEY LOSER SMOL BO-",
+
+        "errmsg": {
+            "cmdNotFound": "Sorry, I wasn't able to find that command.",
+            "cmdDisabled": "I apologize, but that command has been disabled for the time being.",
+            "cmdDMDisabled": "I apologize, but that command is disabled in DM channels.",
+            "cmdNSFWErr": "This command can only be used in NSFW channels!",
+            "cmdInvalidParam": "There was an error in your input.",
+            "cmdNoPerms": "You dont have permission to use this command.",
+            "cmdError": "It seems there was an error running your command. Try again or contact the owner of the bot.",
+            "nsfwNoRes": "I apologize, but I wasn't able to find anything with the tag(s) "
+        },
+
+        "eightballRes": {
+            "1": "Yes.",
+            "2": "According to the research done by the UAC, it is without a doubt.",
+            "3": "It is certain.",
+            "4": "You may rely on it.",
+            "5": "Our resarch points to.. Yes!",
+            "6": "Outlook good!",
+            "7": "No.",
+            "8": "Don't count on it.",
+            "9": "I'm very doubtful on that.",
+            "10": "Research concluded negative.",
+            "11": "I'm a bit busy at the moment..",
+            "12": "It's best if I don't tell you now.",
+            "13": "What? I wasn't paying attention.",
+            "14": "Ask me again later, please."
+        },
+
+        "headsTails": {
+            "1": "You landed heads.",
+            "2": "You got heads!",
+            "3": "The coin landed on heads.",
+            "4": "You landed tails.",
+            "5": "You got tails!",
+            "6": "The coin landed on tails."
+        },
+
+        "generalRes" : {
+            "coinFlipping": "Flipping..",
+            "loveCalcFinal": "The final result of my calculation was ",
+            "loveCalculating": "Calculating..",
+            "reddFooter": "If the image isn't showing up, click the title!",
+            "ping": "Pong! "
+        }
+    },
+
+    "lol": {
+        "CREDIT": "@pustls on Twitter",
+        "NOTE": "End my suffering please",
+
+        "errmsg": {
+            "cmdNotFound": "Sowwy--- w-w-waswnt abwe to find dat commownd... unu...",
+            "cmdDisabled": "i-i-i apowugise, but dat commownd haz ben disabered :// fo da time being lolz!!!",
+            "cmdDMDisabled": "i-i apowugise unu, bu dat commownd iz disabed in Dee Em!! channelzzz.",
+            "cmdNSFWErr": "dis commownd can onwy b used en NSFW chanows uwu!",
+            "cmdInvalidParam": "der waz an ewwow (lolz) in ur input uwu!",
+            "cmdNoPerms": "u don have permission to use dat command uwu!!!!",
+            "cmdError": "someting went wong when witing command unu. Twy agaiwn or contact da owna of da bowt!!",
+            "nsfwNoRes": "im sowwy, bu i-i wawsn't able to find anyting wiwth da tag(s)"
+        },
+
+        "eightballRes": {
+            "1": "yus!!",
+            "2": "accowding 2 da weserch downe by da UAC, it is with oot a doubt uwu!!",
+            "3": "itis cewtain lolz!!",
+            "4": "u may wely on it, uwu.",
+            "5": "ouw wesarch poins 2.. yus!",
+            "6": "outwook goowd!",
+            "7": "nuuuu!!!",
+            "8": "don't conte on it :/// unu",
+            "9": "im vewy douwbtful abou dat :((",
+            "10": "wesuch concwuded negatiwve unu",
+            "11": "im a bie buzy at da moment !!!",
+            "12": "it's best if i-i don tew u no",
+            "13": "whaaa? i wawsn't paying attention, i'm sweepy unu",
+            "14": "Awsk me agun lawter, pwease"
+        },
+
+        "headsTails": {
+            "1": "u wawnded heads.",
+            "2": "u got heads!!!!",
+            "3": "da coin wanded on heads owo.",
+            "4": "u wawnded taiws.",
+            "5": "u gow taiws!",
+            "6": "da coin wawnded on taiws uwu."
+        },
+
+        "generalRes" : {
+            "coinFlipping": "fwipping da coin..",
+            "loveCalcFinal": "da fina wesult of my cawcuwation waz ",
+            "loveCalculating": "Cawcuwating..",
+            "reddFooter": "if da imag isnt showin up, cwick da title!!!",
+            "ping": "Powng! "
+        }
+    }
+}
