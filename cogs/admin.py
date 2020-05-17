@@ -51,7 +51,7 @@ class AdminCommands(commands.Cog):
 
         if isinstance(error, commands.MissingRequiredArgument):
             if error.param.name == "user":
-            await ctx.send(f":x: {sender.mention} || {getTranslation(sender.guild.id, 'errmsg', 'cmdInvalidParam')}\n``>>kick [user]``")
+                await ctx.send(f":x: {sender.mention} || {getTranslation(sender.guild.id, 'errmsg', 'cmdInvalidParam')}\n``>>kick [user]``")
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
