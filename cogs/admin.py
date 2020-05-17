@@ -1,9 +1,8 @@
 import json
-err_msgs = json.load(open("JSON/error_responses.json", "r"))
-
 import random
 import asyncio
 import discord
+from utils.functions import getTranslation
 from discord.ext import commands
 
 
@@ -48,13 +47,11 @@ class AdminCommands(commands.Cog):
     async def kick_handler(self, ctx, error):
         sender = ctx.message.author
         if isinstance(error, commands.MissingPermissions):
-            await ctx.send("{} || ".format(sender.mention) + random.choice(err_msgs)
-                           + """\n``Missing permission "Kick Members"``""")
+            await ctx.send(f":x: {sender.mention} || {getTranslation(sender.guild.id, 'errmsg', 'cmdNoPerms')}")
 
         if isinstance(error, commands.MissingRequiredArgument):
             if error.param.name == "user":
-                await ctx.send("{} || ".format(sender.mention) + random.choice(err_msgs)
-                               + """\n``Missing required argument "User"``""")
+            await ctx.send(f":x: {sender.mention} || {getTranslation(sender.guild.id, 'errmsg', 'cmdInvalidParam')}\n``>>kick [user]``")
 
     @commands.command()
     @commands.has_permissions(ban_members=True)
@@ -73,13 +70,11 @@ class AdminCommands(commands.Cog):
     async def ban_handler(self, ctx, error):
         sender = ctx.message.author
         if isinstance(error, commands.MissingPermissions):
-            await ctx.send("{} || ".format(sender.mention) + random.choice(err_msgs)
-                           + """\n``Missing permission "Ban Members"``""")
+            await ctx.send(f":x: {sender.mention} || {getTranslation(sender.guild.id, 'errmsg', 'cmdNoPerms')}")
 
         if isinstance(error, commands.MissingRequiredArgument):
             if error.param.name == "user":
-                await ctx.send("{} || ".format(sender.mention) + random.choice(err_msgs)
-                               + """\n``Missing required argument "User"``""")
+                await ctx.send(f":x: {sender.mention} || {getTranslation(sender.guild.id, 'errmsg', 'cmdInvalidParam')}\n``>>ban [user]``")
 
     @commands.command()
     @commands.has_permissions(kick_members=True)
@@ -95,13 +90,11 @@ class AdminCommands(commands.Cog):
     async def softban_handler(self, ctx, error):
         sender = ctx.message.author
         if isinstance(error, commands.MissingPermissions):
-            await ctx.send("{} || ".format(sender.mention) + random.choice(err_msgs)
-                           + """\n``Missing permission "Kick Members"``""")
+            await ctx.send(f":x: {sender.mention} || {getTranslation(sender.guild.id, 'errmsg', 'cmdNoPerms')}")
 
         if isinstance(error, commands.MissingRequiredArgument):
             if error.param.name == "user":
-                await ctx.send("{} || ".format(sender.mention) + random.choice(err_msgs)
-                               + """\n``Missing required argument "User"``""")
+                await ctx.send(f":x: {sender.mention} || {getTranslation(sender.guild.id, 'errmsg', 'cmdInvalidParam')}\n``>>softban [user]``")
 
 
 def setup(bot):
