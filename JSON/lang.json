@@ -153,52 +153,52 @@
 
     "ru": {
 
-        "CREDIT": "Tetrus - keybase.io/typical_russian (placeholder:MiniBuka1)",
-        "NOTES": "Totally not a Russian bot from Twittor! (placeholder:HEY LOSER SMOL BO-)",
+        "CREDIT": "Tetrus - keybase.io/typical_russian (PLACEHOLDER:MiniBuka1)",
+        "NOTES": "Totally not a Russian bot from Twittor! (rus: Точно не кремлебот с Твиттора!) (PLACEHOLDER:HEY LOSER SMOL BO-)",
 
         "errmsg": {
-            "cmdNotFound": "Sorry, I wasn't able to find that command.",
-            "cmdDisabled": "I apologize, but that command has been disabled for the time being.",
-            "cmdDMDisabled": "I apologize, but that command is disabled in DM channels.",
-            "cmdNSFWErr": "This command can only be used in NSFW channels!",
-            "cmdInvalidParam": "There was an error in your input.",
-            "cmdNoPerms": "You dont have permission to use this command.",
-            "cmdError": "It seems there was an error running your command. Try again or contact the owner of the bot.",
-            "nsfwNoRes": "I apologize, but I wasn't able to find anything with the tag(s) "
+            "cmdNotFound": "Извиняюсь, но команда не найдено.",
+            "cmdDisabled": "К большому сожалению, но данная команда отключён на время.",
+            "cmdDMDisabled": "Этот команда может использована только в Личном сообщении.",
+            "cmdNSFWErr": "Команда предназначена только для NSFW-каналах!",
+            "cmdInvalidParam": "Ошибка при вводе параметр.",
+            "cmdNoPerms": "У вас нету разрешении к использовании этого команда.",
+            "cmdError": "Произошел критическая ошибка. Попробуй ещё раз или обращайся к разработчику Бота.",
+            "nsfwNoRes": "Приношу извинении, но ничего нашёл по тег(у) "
         },
 
         "eightballRes": {
-            "1": "Yes.",
-            "2": "According to the research done by the UAC, it is without a doubt.",
-            "3": "It is certain.",
-            "4": "You may rely on it.",
-            "5": "Our resarch points to.. Yes!",
-            "6": "Outlook good!",
-            "7": "No.",
-            "8": "Don't count on it.",
-            "9": "I'm very doubtful on that.",
-            "10": "Research concluded negative.",
-            "11": "I'm a bit busy at the moment..",
-            "12": "It's best if I don't tell you now.",
-            "13": "What? I wasn't paying attention.",
-            "14": "Ask me again later, please."
+            "1": "Да.",
+            "2": "Судя по исследовании от UAC, без сомнении.",
+            "3": "Это точно.",
+            "4": "Вы можете положиться на него.",
+            "5": "Наши исследование указывают на... Да!",
+            "6": "Похоже на хорошие перспективы!",
+            "7": "Нет.",
+            "8": "Не рассчитывайся в это.",
+            "9": "Очень сомневаюсь в этом.",
+            "10": "Исследование показало отрицательно.",
+            "11": "Немного занят на время..",
+            "12": "Будет лучше если не расскажу.",
+            "13": "Что? Не обращал внимание.",
+            "14": "Спроси мне по-позже, пожалуйста."
         },
 
         "headsTails": {
-            "1": "You landed heads.",
-            "2": "You got heads!",
-            "3": "The coin landed on heads.",
-            "4": "You landed tails.",
-            "5": "You got tails!",
-            "6": "The coin landed on tails."
+            "1": "Вам выпал орёл.",
+            "2": "У вас орёл!",
+            "3": "Монета попал на орла.",
+            "4": "Вам выпал решка.",
+            "5": "У вас решка!",
+            "6": "Монета попал на решку."
         },
 
         "generalRes" : {
-            "coinFlipping": "Flipping..",
-            "loveCalcFinal": "The final result of my calculation was ",
-            "loveCalculating": "Calculating..",
-            "reddFooter": "If the image isn't showing up, click the title!",
-            "ping": "Pong! "
+            "coinFlipping": "Бросаю..",
+            "loveCalcFinal": "В результате получается ",
+            "loveCalculating": "Считаю..",
+            "reddFooter": "Если картинка не показывается, кликай на заголовок!",
+            "ping": "Понг! "
         }
     },
 
