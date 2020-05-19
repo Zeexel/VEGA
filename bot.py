@@ -96,7 +96,7 @@ async def setting(ctx, action, var, newvar):
                 availableLangs = {
                     'en',
                     'fr',
-               #     'ru',
+                    'ru',
                     'es',
                     'lol'
                 }
