@@ -41,7 +41,7 @@ class Fun(commands.Cog):
         await ctx.send("{} || Flipping..".format(sender.mention))
         async with ctx.typing():
             await asyncio.sleep(1.3)
-        await ctx.send(f"{sender.mention}, {getTranslation(ctx.message.guild.id, 'headstails', str(random.randint(1, 6)))}")
+        await ctx.send(f"{sender.mention}, {getTranslation(ctx.message.guild.id, 'headsTails', str(random.randint(1, 6)))}")
 
     @commands.command()
     async def lovecalc(self, ctx, user1: discord.Member, user2: discord.Member):
