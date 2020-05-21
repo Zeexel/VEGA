@@ -14,4 +14,5 @@ utils/__pycache__/checks.cpython-37.pyc
 utils/__pycache__/dl_img.cpython-37.pyc
 utils/__pycache__/error_handler.cpython-37.pyc
 
-/JSON/config.json
+JSON/config.json
+SQL/

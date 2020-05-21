@@ -160,6 +160,28 @@ async def reload(ctx, cog):
     print(f"Successfully loaded {cog.lower()}")
     await ctx.send(f":white_check_mark: The extension ``{cog.lower()}`` has been reloaded!")
 
+@checks.is_owner()
+@bot.command()
+async def generateallconfigs(ctx):
+    # FUN FACT: This is only here because I fucking wiped the SQL databases on VEGA's production server :)
+    db = sqlite3.connect('SQL/settings.sqlite')
+    cursor = db.cursor()
+
+    await ctx.send(":warning: THIS IS GOING TO LAG THE BOT FOR A FEW MINUTES")
+
+    for guild in bot.guilds:
+        cursor.execute("SELECT guild_id FROM serversettings where guild_id = {}".format(guild.id))
+        res = cursor.fetchone()
+        if res is None:
+            sql = ("INSERT INTO serversettings(guild_id) VALUES({})".format(guild.id))
+            cursor.execute(sql)
+            await ctx.send(f":white_check_mark: Generated a config for ``{guild.name}``")
+        else:
+            await ctx.send(f":x: Config exists for ``{guild.name}``")
+
+    db.commit()
+    await ctx.send(f":white_check_mark: Finished generating the config for ``{len(list(bot.guilds))}`` servers!")
+
 @bot.command()
 async def ping(ctx):
     await ctx.send(f"Pong! ({round(bot.latency)}ms)")
