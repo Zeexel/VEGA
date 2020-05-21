@@ -1,0 +1,10 @@
+{
+  "token": "BOT_TOKEN_HERE",
+  "prefix": ">>",
+  "inv_link": "INV_LINK_HERE",
+  "version": "VER",
+  "reddit_clientid": "PRAW_CLIENTID",
+  "reddit_clientsecret": "PRAW_CLIENTSECRET",
+  "osu_api_key": "KEY_HERE",
+  "weather_key": "KEY_HERE"
+}
