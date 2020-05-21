@@ -150,14 +150,15 @@ async def update(ctx):
 @checks.is_owner()
 @bot.command()
 async def reload(ctx, cog):
-    await ctx.send(f"Now reloading extension ``{cog.lower()}``. Give me a moment..")
+    await ctx.send(f":diamond_shape_with_a_dot_inside: Now reloading extension ``{cog.lower()}``. Give me a moment..")
     print(f"Reloading extension {cog.lower()}.")
     # Try to unload the extension, if it's not unloaded already
     try: bot.unload_extension(cog.lower())
     except commands.errors.ExtensionNotLoaded: pass
-    bot.load_extension(cog.lower())
+    try: bot.load_extension(cog.lower())
+    except commands.errors.ExtensionNotFound: await ctx.send(f":x: The extension ``{cog}`` wasn't found..")
     print(f"Successfully loaded {cog.lower()}")
-    await ctx.send(f"The extension ``{cog.lower()}`` has been reloaded!")
+    await ctx.send(f":white_check_mark: The extension ``{cog.lower()}`` has been reloaded!")
 
 @bot.command()
 async def ping(ctx):

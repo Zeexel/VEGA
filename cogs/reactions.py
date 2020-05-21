@@ -90,7 +90,7 @@ class Reactions(commands.Cog):
         sender = ctx.message.author
         if isinstance(error, commands.MissingRequiredArgument):
             if error.param.name is 'user':
-                await ctx.send("<:vega:618947299267182602> {} || ".format(sender.mention)
+                await ctx.send(":x: {} || ".format(sender.mention)
                                + "According to my calculations, it's impossible to fuck the air.")
 
 def setup(bot):

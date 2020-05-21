@@ -11,8 +11,10 @@
             "cmdNSFWErr": "This command can only be used in NSFW channels!",
             "cmdInvalidParam": "There was an error in your input.",
             "cmdNoPerms": "You dont have permission to use this command.",
-            "cmdError": "It seems there was an error running your command. Try again or contact the owner of the bot.",
-            "nsfwNoRes": "I apologize, but I wasn't able to find anything with the tag(s) "
+            "cmdError": "It seems there was an error running your command. Try again, or contact the owner of the bot.",
+            "nsfwNoRes": "I apologize, but I wasn't able to find anything with the tag(s)",
+            "owmLocNotFound": "Sorry, I wasn't able to find the location",
+            "userNotFound": "Sorry, I wasn't able to find the user"
         },
 
         "eightballRes": {
@@ -64,7 +66,9 @@
             "cmdInvalidParam": "Ahí fuera un error en tu entrada.",
             "cmdNoPerms": "No tiene permiso a usar esto mandar.",
             "cmdError": "Lo parece ahí fue un error corriendo tu mandar. Volver a intentar o contacto el dueño de el bot.",
-            "nsfwNoRes": "Lo siento, pero yo no estaba puedo a encontrar nada con el etiqueta(s)"
+            "nsfwNoRes": "Lo siento, pero yo no estaba puedo a encontrar nada con el etiqueta(s)",
+            "owmLocNotFound": "Sorry, I wasn't able to find the location",
+            "userNotFound": "Sorry, I wasn't able to find the user"
         },
 
         "eightballRes": {
@@ -113,7 +117,9 @@
             "cmdInvalidParam": "Il y avait une erreur dedans ta entrée.",
             "cmdNoPerms": "Tu n'a pas la permission d'utiliser cet commandement.",
             "cmdError": "Il-y-avait une erreur pour exécuter votre commandement, essay une autre fois ou contacte le propriétaire de la bot.",
-            "nsfwNoRes": "Je suis désolé, mais je ne pouvait pas trouver aucune résultat avec les tags"
+            "nsfwNoRes": "Je suis désolé, mais je ne pouvait pas trouver aucune résultat avec les tags",
+            "owmLocNotFound": "Sorry, I wasn't able to find the location",
+            "userNotFound": "Sorry, I wasn't able to find the user"
         },
 
         "eightballRes": {
@@ -153,8 +159,8 @@
 
     "ru": {
 
-        "CREDIT": "Tetrus - keybase.io/typical_russian (PLACEHOLDER:MiniBuka1)",
-        "NOTES": "Totally not a Russian bot from Twittor! (rus: Точно не кремлебот с Твиттора!) (PLACEHOLDER:HEY LOSER SMOL BO-)",
+        "CREDIT": "Tetrus - keybase.io/typical_russian",
+        "NOTES": "Totally not a Russian bot from Twittor! (rus: Точно не кремлебот с Твиттора!)",
 
         "errmsg": {
             "cmdNotFound": "Извиняюсь, но команда не найдено.",
@@ -164,7 +170,9 @@
             "cmdInvalidParam": "Ошибка при вводе параметр.",
             "cmdNoPerms": "У вас нету разрешении к использовании этого команда.",
             "cmdError": "Произошел критическая ошибка. Попробуй ещё раз или обращайся к разработчику Бота.",
-            "nsfwNoRes": "Приношу извинении, но ничего нашёл по тег(у) "
+            "nsfwNoRes": "Приношу извинении, но ничего нашёл по тег(у)",
+            "owmLocNotFound": "Sorry, I wasn't able to find the location",
+            "userNotFound": "Sorry, I wasn't able to find the user"
         },
 
         "eightballRes": {
@@ -214,7 +222,9 @@
             "cmdInvalidParam": "der waz an ewwow (lolz) in ur input uwu!",
             "cmdNoPerms": "u don have permission to use dat command uwu!!!!",
             "cmdError": "someting went wong when witing command unu. Twy agaiwn or contact da owna of da bowt!!",
-            "nsfwNoRes": "im sowwy, bu i-i wawsn't able to find anyting wiwth da tag(s)"
+            "nsfwNoRes": "im sowwy, bu i-i wawsn't able to find anyting wiwth da tag(s)",
+            "owmLocNotFound": "Sorry, I wasn't able to find the location",
+            "userNotFound": "Sorry, I wasn't able to find the user"
         },
 
         "eightballRes": {

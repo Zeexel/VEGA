@@ -59,7 +59,7 @@ class Fun(commands.Cog):
     async def lovecalc_handler(self, ctx, error):
         sender = ctx.message.author
         if isinstance(error, commands.MissingRequiredArgument):
-            if error.param.name is 'user1' or 'user2':
+            if error.param.name == 'user1' or 'user2':
                 await ctx.send(f":warning: {sender.mention}, {getTranslation(ctx.message.guild.id, 'errmsg', 'cmdInvalidParam')}" +
                 "\n ``>>lovecalc [user1] [user2]")
 
@@ -227,7 +227,7 @@ class Fun(commands.Cog):
     async def scatmansworld_handler(self, ctx, error):
         sender = ctx.message.author
         if isinstance(error, commands.MissingRequiredArgument):
-            if error.param.name is 'img_url':
+            if error.param.name == 'img_url':
                 await ctx.send(f":warning: {sender.mention}, {getTranslation(ctx.message.guild.id, 'errmsg', 'cmdInvalidParam')}" +
                 "\n``>>scatman [url] [title]")
 
@@ -282,7 +282,7 @@ class Fun(commands.Cog):
     async def superhotchicks_handler(self, ctx, error):
         sender = ctx.message.author
         if isinstance(error, commands.MissingRequiredArgument):
-            if error.param.name is 'url':
+            if error.param.name == 'url':
                 await ctx.send(f":warning: {sender.mention}, {getTranslation(ctx.message.guild.id, 'errmsg', 'cmdInvalidParam')}" +
                 "\n``>>absolutelydisgusting [url]")
 

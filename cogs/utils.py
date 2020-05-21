@@ -6,6 +6,7 @@ import requests
 import math
 import datetime
 import utils.checks as checks
+from utils.functions import getTranslation
 from jikanpy import Jikan
 from discord.ext import commands
 
@@ -85,62 +86,71 @@ class Utils(commands.Cog):
             
     @commands.command(aliases=['osu_stats', 'osu'])
     async def osustats(self, ctx, mode, user):
-        if mode == "osu" or mode == "standard":       # OSU!
-            api_url = "https://osu.ppy.sh/api/get_user?k={key}&u={usr}&m={mode}".format(key=cfg['osu_api_key'],
-                                                                                        usr=user,
-                                                                                        mode=0)
-            response = requests.get(url=api_url)
-            data = response.json()
-            embed = discord.Embed(title="OSU! stats for {usr}".format(usr=data[0]['username']),
-                                  description="ID {id}".format(id=data[0]['user_id']),
-                                  color=0xff8cd5)
-        elif mode == "taiko":     # Taiko
-            api_url = "https://osu.ppy.sh/api/get_user?k={key}&u={usr}&m={mode}".format(key=cfg['osu_api_key'],
-                                                                                        usr=user,
-                                                                                        mode=1)
-            response = requests.get(url=api_url)
-            data = response.json()
-            embed = discord.Embed(title="Taiko stats for {usr}".format(usr=data[0]['username']),
-                                  description="ID {id}".format(id=data[0]['user_id']),
-                                  color=0xff8cd5)
-        elif mode ==  "ctb" or mode == "CtB":     # CtB
-            api_url = "https://osu.ppy.sh/api/get_user?k={key}&u={usr}&m={mode}".format(key=cfg['osu_api_key'],
-                                                                                        usr=user,
-                                                                                        mode=2)
-            response = requests.get(url=api_url)
-            data = response.json()
-            embed = discord.Embed(title="CtB stats for {usr}".format(usr=data[0]['username']),
-                                  description="ID {id}".format(id=data[0]['user_id']),
-                                  color=0xff8cd5)
-        elif mode == "mania" or mode == "osu!mania":     # OSU!mania
-            api_url = "https://osu.ppy.sh/api/get_user?k={key}&u={usr}&m={mode}".format(key=cfg['osu_api_key'],
-                                                                                        usr=user,
-                                                                                        mode=3)
-            response = requests.get(url=api_url)
-            data = response.json()
-            embed = discord.Embed(title="OSU!mania stats for {usr}".format(usr=data[0]['username']),
-                                  description="ID {id}".format(id=data[0]['user_id']),
-                                  color=0xff8cd5)
+        try:
+            # TODO: Figure out if there's something like switch cases in python, this looks like YanDev's code
+            if mode == "osu" or mode == "standard":       # OSU!
+                api_url = "https://osu.ppy.sh/api/get_user?k={key}&u={usr}&m={mode}".format(key=cfg['osu_api_key'],
+                                                                                            usr=user,
+                                                                                            mode=0)
+                response = requests.get(url=api_url)
+                data = response.json()
+                embed = discord.Embed(title="OSU! stats for {usr}".format(usr=data[0]['username']),
+                                    description="ID {id}".format(id=data[0]['user_id']),
+                                    color=0xff8cd5)
+            elif mode == "taiko":     # Taiko
+                api_url = "https://osu.ppy.sh/api/get_user?k={key}&u={usr}&m={mode}".format(key=cfg['osu_api_key'],
+                                                                                            usr=user,
+                                                                                            mode=1)
+                response = requests.get(url=api_url)
+                data = response.json()
+                embed = discord.Embed(title="Taiko stats for {usr}".format(usr=data[0]['username']),
+                                    description="ID {id}".format(id=data[0]['user_id']),
+                                    color=0xff8cd5)
+            elif mode ==  "ctb" or mode == "CtB":     # CtB
+                api_url = "https://osu.ppy.sh/api/get_user?k={key}&u={usr}&m={mode}".format(key=cfg['osu_api_key'],
+                                                                                            usr=user,
+                                                                                            mode=2)
+                response = requests.get(url=api_url)
+                data = response.json()
+                embed = discord.Embed(title="CtB stats for {usr}".format(usr=data[0]['username']),
+                                    description="ID {id}".format(id=data[0]['user_id']),
+                                    color=0xff8cd5)
+            elif mode == "mania" or mode == "osu!mania":     # OSU!mania
+                api_url = "https://osu.ppy.sh/api/get_user?k={key}&u={usr}&m={mode}".format(key=cfg['osu_api_key'],
+                                                                                            usr=user,
+                                                                                            mode=3)
+                response = requests.get(url=api_url)
+                data = response.json()
+                embed = discord.Embed(title="OSU!mania stats for {usr}".format(usr=data[0]['username']),
+                                    description="ID {id}".format(id=data[0]['user_id']),
+                                    color=0xff8cd5)
 
 
-        embed.set_thumbnail(url='https://upload.wikimedia.org/wikipedia/commons/d/d3/Osu%21Logo_%282015%29.png')
+            embed.set_thumbnail(url='https://upload.wikimedia.org/wikipedia/commons/d/d3/Osu%21Logo_%282015%29.png')
 
-        embed.add_field(name="Joined OSU on", value=data[0]['join_date'])
-        embed.add_field(name="Hours played", value="{hrs}"      # Divide seconds by 3600 to get total hours played
-                        .format(hrs=round(int(data[0]['total_seconds_played']) / 3600)))
-        embed.add_field(name="Beatmaps Played", value=data[0]['playcount'])
-        embed.add_field(name="Overall Accuracy", value="{}%".format((math.floor(float(data[0]['accuracy']) * 100)/100.0)))
-        embed.add_field(name="Level", value="{}".format(round(float(data[0]['level']))))
-        embed.add_field(name="Ranking in {xx}".format(xx=data[0]['country']),
-                        value=data[0]['pp_country_rank'])
-        embed.add_field(name="Total SS grades earned", value=data[0]['count_rank_ss'])
-        embed.add_field(name="Total S grades earned", value=data[0]['count_rank_s'])
-        embed.add_field(name="Total A grades earned", value=data[0]['count_rank_a'])
+            embed.add_field(name="Joined OSU on", value=data[0]['join_date'])
+            embed.add_field(name="Hours played", value="{hrs}"      # Divide seconds by 3600 to get total hours played
+                            .format(hrs=round(int(data[0]['total_seconds_played']) / 3600)))
+            embed.add_field(name="Beatmaps Played", value=data[0]['playcount'])
+            embed.add_field(name="Overall Accuracy", value="{}%".format((math.floor(float(data[0]['accuracy']) * 100)/100.0)))
+            embed.add_field(name="Level", value="{}".format(round(float(data[0]['level']))))
+            embed.add_field(name="Ranking in {xx}".format(xx=data[0]['country']),
+                            value=data[0]['pp_country_rank'])
+            embed.add_field(name="Total SS grades", value=data[0]['count_rank_ss'])
+            embed.add_field(name="Total S grades", value=data[0]['count_rank_s'])
+            embed.add_field(name="Total A grades", value=data[0]['count_rank_a'])
 
-        await ctx.send(embed=embed)
+            await ctx.send(embed=embed)
+
+        # NOTE: For some reason, the OSU api makes python throw an IndexError rather than a KeyError
+        except IndexError: await ctx.send(f":x: {sender.mention} || {getTranslation(ctx.message.guild.id, 'errmsg', 'userNotFound')} ``{user}``")
+        except KeyError: await ctx.send(f":x: {sender.mention} || {getTranslation(ctx.message.guild.id, 'errmsg', 'userNotFound')} ``{user}``")
+        # This is here because for whatever reason some calls fail and prevent integer values (e.g. hours) to parse correctly
+        except TypeError: await ctx.send(f":warning: {sender.mention} || {getTranslation(ctx.message.guild.id, 'errmsg', 'cmdError')}")
 
     @commands.command(aliases=['mal'])
     async def myanimelist(self, ctx, type, title, *subtype):
+
         if type == "user":
             user = jikan.user(username=title)
             embed = discord.Embed(title=user['username'], url=user['url'], description=f"MAL User ID: {str(user['user_id'])}", color=0x2d58c4)
@@ -175,25 +185,30 @@ class Utils(commands.Cog):
   
     @commands.command()
     async def weather(self, ctx, *, city):
-        res = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={cfg['weather_key']}")
-        data = res.json()
-        icon = f"https://openweathermap.org/img/wn/{data['weather'][0]['icon']}@2x.png"
-        
-        def convertK2C(var1):   # For whatever reason, OpenWeatherMap uses Kelvin by default
-            C = var1 - 273.15
-            return str(round(C)) + "°C"
+        sender = ctx.message.author
 
-        embed = discord.Embed(title=f"{data['name']}, {data['sys']['country']}", color=0x616161, description=data['weather'][0]['main'])
-        embed.set_thumbnail(url=icon)
-        
-        embed.add_field(name="Temperature", value=convertK2C(data['main']['temp']))
-        embed.add_field(name="Feels Like..", value=convertK2C(data['main']['feels_like']))
-        embed.add_field(name="Today's High", value=convertK2C(data['main']['temp_max']))
-        embed.add_field(name="Today's Low", value=convertK2C(data['main']['temp_min']))
-        embed.add_field(name="Humidity", value=f"{str(data['main']['humidity'])}%")
-        embed.add_field(name="Wind Speed", value=f"{str(round(data['wind']['speed'] * 3.6))} KMH")
+        try:
+            res = requests.get(f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={cfg['weather_key']}")
+            data = res.json()
+            icon = f"https://openweathermap.org/img/wn/{data['weather'][0]['icon']}@2x.png"
+            
+            def convertK2C(var1):   # For whatever reason, OpenWeatherMap uses Kelvin by default
+                C = var1 - 273.15
+                return str(round(C)) + "°C"
 
-        await ctx.send(embed=embed)
+            embed = discord.Embed(title=f"{data['name']}, {data['sys']['country']}", color=0x616161, description=data['weather'][0]['main'])
+            embed.set_thumbnail(url=icon)
+            embed.set_footer(text="Data from OpenWeatherMap")
+            
+            embed.add_field(name="Temperature", value=convertK2C(data['main']['temp']))
+            embed.add_field(name="Feels Like..", value=convertK2C(data['main']['feels_like']))
+            embed.add_field(name="Today's High", value=convertK2C(data['main']['temp_max']))
+            embed.add_field(name="Today's Low", value=convertK2C(data['main']['temp_min']))
+            embed.add_field(name="Humidity", value=f"{str(data['main']['humidity'])}%")
+            embed.add_field(name="Wind Speed", value=f"{str(round(data['wind']['speed'] * 3.6))} KMH")
+
+            await ctx.send(embed=embed)
+        except KeyError: await ctx.send(f":x: {sender.mention} || {getTranslation(ctx.message.guild.id, 'errmsg', 'owmLocNotFound')} ``{city}``")
 
 
 def setup(bot):
