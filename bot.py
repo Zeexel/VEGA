@@ -7,6 +7,7 @@ import psutil
 import discord
 import sqlite3
 import utils.checks as checks
+from utils.functions import getTranslation
 from discord.ext import commands
 
 cfg = json.load(open("JSON/config.json", "r"))      # Config file
@@ -109,6 +110,12 @@ async def setting(ctx, action, var, newvar):
             
             if var == "guild_id": await ctx.send(f":x: I'm sorry, {sender.mention}, but that value cannot be changed.")
 
+
+@setting.error
+async def settings_handler(ctx, error):
+    sender = ctx.message.author
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send(f":x: {sender.mention} || {getTranslation(sender.guild.id, 'errmsg', 'cmdNoPerms')}")
 
 @commands.has_permissions(administrator=True)
 @bot.command()

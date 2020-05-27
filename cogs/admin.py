@@ -27,8 +27,7 @@ class AdminCommands(commands.Cog):
     async def clear_handler(self, ctx, error):
         sender = ctx.message.author
         if isinstance(error, commands.MissingPermissions):
-            await ctx.send("<:vega:618947299267182602> {} || ".format(sender.mention) + random.choice(err_msgs)
-                           + """\n``Missing permission "Manage messages"``""")
+            await ctx.send(f":x: {sender.mention} || {getTranslation(sender.guild.id, 'errmsg', 'cmdNoPerms')}")
 
     @commands.command()
     @commands.has_permissions(kick_members=True)
