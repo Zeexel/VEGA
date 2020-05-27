@@ -79,7 +79,7 @@ async def on_guild_remove(guild):   # Tracks whenever the bot gets removed from 
 
 # TODO: Add translations for this command & add an available language list somewhere.
 
-# @commands.has_permissions(administrator=True)
+@commands.has_permissions(administrator=True)
 @bot.command(aliases=['settings', 'options', 'config'])
 async def setting(ctx, action, var, newvar):
     sender = ctx.message.author
