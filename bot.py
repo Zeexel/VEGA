@@ -10,9 +10,19 @@ import utils.checks as checks
 from utils.functions import getTranslation
 from discord.ext import commands
 
+# Function to get server prefixes
+def getPrefix(bot, m):
+    db = sqlite3.connect('SQL/settings.sqlite')
+    cursor = db.cursor()
+    if m.guild != None:
+        cursor.execute(f'SELECT prefix FROM serversettings WHERE guild_id = {str(m.guild.id)}')
+        r = cursor.fetchone()
+        return r[0]
+    else: return ">>"
+            
 cfg = json.load(open("JSON/config.json", "r"))      # Config file
 start_time = time.time()
-bot = commands.Bot(command_prefix=cfg['prefix'])
+bot = commands.Bot(command_prefix=getPrefix)
 bot.remove_command('help')      # Disable the default help command to replace it with the custom one
 
 extensions = [
@@ -21,14 +31,15 @@ extensions = [
     'cogs.reactions',
     'cogs.utils',
     'cogs.admin',
-#    'cogs.economy', I'm gonna disable this for now, it's a bit broken
+    'cogs.economy',
+    'cogs.help',
     'cogs.nsfw'
 ]
 
 
 @bot.event
 async def on_ready():
-    activity = discord.Game(name=f"{cfg['prefix']}cmds | Version {cfg['version']}")
+    activity = discord.Game(name=f">>cmds | Version {cfg['version']}")
     await bot.change_presence(status=discord.Status.online, activity=activity)
     print("(C) James P. 2020")
     print("I'm running discord.py version {},".format(discord.__version__))
@@ -36,13 +47,6 @@ async def on_ready():
     print("Errors and messages will appear below this line.")
     print("-----------------------------------------------")
 
-
-
-@bot.command(aliases=['cmds', 'commands'])
-async def help(ctx):
-    sender = ctx.message.author
-    await ctx.send("{}, here you go!\nhttps://gist.github.com/Zeexel/d68d3cd9bdf4a5147490b535a2640545"
-                    .format(sender.mention))
 
 @bot.command()
 async def invite(ctx):
@@ -57,10 +61,10 @@ async def on_guild_join(guild):     # Tracks whenever the bot joins a new server
     # Create a new server settings entry
     db = sqlite3.connect('SQL/settings.sqlite')
     cursor = db.cursor()          
-    cursor.execute("SELECT guild_id FROM serversettings where guild_id = {}".format(guild.id))
+    cursor.execute(f"SELECT guild_id FROM serversettings where guild_id = {guild.id}")
     res = cursor.fetchone()
     if res is None:
-        sql = ("INSERT INTO serversettings(guild_id) VALUES({})".format(guild.id))
+        sql = (f"INSERT INTO serversettings(guild_id) VALUES({guild.id})")
         cursor.execute(sql)
         db.commit()
         print(f"Generated a server config entry for guild ID {str(guild.id)}")
@@ -74,64 +78,6 @@ async def on_guild_remove(guild):   # Tracks whenever the bot gets removed from 
     cursor.execute(f"DELETE from serversettings where guild_id = '{guild.id}'")
     db.commit()
     print(f"Deleted server config entry for guild ID {str(guild.id)}")
-
-
-""" Commands relating to server settings """
-
-# TODO: Add translations for this command & add an available language list somewhere.
-
-@commands.has_permissions(administrator=True)
-@bot.command(aliases=['settings', 'options', 'config'])
-async def setting(ctx, action, var, newvar):
-    sender = ctx.message.author
-    db = sqlite3.connect('SQL/settings.sqlite')
-    cursor = db.cursor()
-    cursor.execute("SELECT guild_id FROM serversettings where guild_id = '{}'".format(sender.guild.id))
-    res = cursor.fetchone()
-    if res is not None:
-        if action == "change" or "set":
-            if var == "language" or "lang":
-                 # TODO: Add a way to let users type in full language names
-                # example: French, English, Japanese, Russian
-                # Abbreviations are confusing somtimes!
-                availableLangs = {
-                    'en',
-                    'fr',
-                    'ru',
-                    'es',
-                    'lol'
-                }
-                if newvar.lower() in availableLangs:
-                    cursor.execute(f"UPDATE serversettings SET lang = '{newvar}'")
-                    db.commit()
-                    await ctx.send(f":white_check_mark: Success! The new language is ``{newvar}``!")
-                else:
-                    await ctx.send(f":x: {sender.mention}, The language ``{newvar}`` is not present within my language file!")
-            
-            if var == "guild_id": await ctx.send(f":x: I'm sorry, {sender.mention}, but that value cannot be changed.")
-
-
-@setting.error
-async def settings_handler(ctx, error):
-    sender = ctx.message.author
-    if isinstance(error, commands.MissingPermissions):
-        await ctx.send(f":x: {sender.mention} || {getTranslation(sender.guild.id, 'errmsg', 'cmdNoPerms')}")
-
-@commands.has_permissions(administrator=True)
-@bot.command()
-async def generateconfig(ctx):
-    sender = ctx.message.author
-    db = sqlite3.connect('SQL/settings.sqlite')
-    cursor = db.cursor()          
-    cursor.execute("SELECT guild_id FROM serversettings where guild_id = {}".format(sender.guild.id))
-    res = cursor.fetchone()
-    if res is None:
-        sql = ("INSERT INTO serversettings(guild_id) VALUES({})".format(sender.guild.id))
-        cursor.execute(sql)
-        db.commit()
-        await ctx.send(f":white_check_mark: {sender.mention}, a config file was successfully generated for your server!")
-    else:
-        await ctx.send(f":x: {sender.mention}, your server already has a config file!")
 
 
 """ Debugging Commands """
@@ -162,10 +108,13 @@ async def reload(ctx, cog):
     # Try to unload the extension, if it's not unloaded already
     try: bot.unload_extension(cog.lower())
     except commands.errors.ExtensionNotLoaded: pass
-    try: bot.load_extension(cog.lower())
+
+    try: 
+        bot.load_extension(cog.lower())
+        print(f"Successfully loaded {cog.lower()}")
+        await ctx.send(f":white_check_mark: The extension ``{cog.lower()}`` has been reloaded!")
     except commands.errors.ExtensionNotFound: await ctx.send(f":x: The extension ``{cog}`` wasn't found..")
-    print(f"Successfully loaded {cog.lower()}")
-    await ctx.send(f":white_check_mark: The extension ``{cog.lower()}`` has been reloaded!")
+
 
 @checks.is_owner()
 @bot.command()

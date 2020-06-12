@@ -2,6 +2,7 @@ import json
 import random
 import asyncio
 import discord
+import sqlite3
 from utils.functions import getTranslation
 from discord.ext import commands
 
@@ -15,13 +16,10 @@ class AdminCommands(commands.Cog):
     async def clear(self, ctx, amnt=10, maxmsg=500):
         sender = ctx.message.author
         if amnt > maxmsg:
-            await ctx.send("<:vega:618947299267182602> {} || ".format(sender.mention) + random.choice(err_msgs)
-                           + "\n``Max messages you can clear is 500!``")
+            await ctx.send(f":x: {sender.mention} || {getTranslation(sender.guild.id, 'errmsg', 'clrError')}")
         else:
             await ctx.channel.purge(limit=amnt)
-            await asyncio.sleep(0.5)
-            await ctx.send("<:vega:618947299267182602> {sndr} || Successfully cleared ``{amount}`` messages!"
-                           .format(sndr=sender.mention, amount=amnt))
+            await ctx.send(f":white_check_mark: {sender.mention} || {getTranslation(sender.guild.id, 'generalRes', 'clrSuccess')}")
 
     @clear.error
     async def clear_handler(self, ctx, error):
@@ -82,8 +80,7 @@ class AdminCommands(commands.Cog):
         await user.ban(reason='SOFTBANNED', delete_message_days=int(messages_to_del))
         await user.unban(reason=None)
 
-        await ctx.send("{sndr} || Softbanned ``{name}#{discrim}``"
-                       .format(sndr=sender.mention, name=user.name, discrim=user.discriminator))
+        await ctx.send(f":white_check_mark: {sender.mention} || Softbanned ``{user.name}#{user.discriminator}``")
 
     @softban.error
     async def softban_handler(self, ctx, error):
@@ -94,6 +91,48 @@ class AdminCommands(commands.Cog):
         if isinstance(error, commands.MissingRequiredArgument):
             if error.param.name == "user":
                 await ctx.send(f":x: {sender.mention} || {getTranslation(sender.guild.id, 'errmsg', 'cmdInvalidParam')}\n``>>softban [user]``")
+
+
+
+    """ Server Settings Commands """
+    @commands.has_permissions(administrator=True)
+    @commands.command(aliases=['settings', 'options', 'config'])
+    async def setting(self, ctx, var, newvar):
+        sender = ctx.message.author
+        db = sqlite3.connect('SQL/settings.sqlite')
+        cursor = db.cursor()
+        cursor.execute("SELECT guild_id FROM serversettings where guild_id = '{}'".format(sender.guild.id))
+        res = cursor.fetchone()
+        if res is not None:
+            if var == "language" or var == "lang":
+                # TODO: Add a way to let users type in full language names
+                # example: French, English, Japanese, Russian
+                # Abbreviations are confusing somtimes!
+                availableLangs = {
+                    'en',
+                    'fr',
+                    'ru',
+                    'es',
+                    'lol'
+                }
+                if newvar.lower() in availableLangs:
+                    cursor.execute(f"UPDATE serversettings SET lang = '{newvar}'")
+                    db.commit()
+                    await ctx.send(f":white_check_mark: Success! The new language is ``{newvar}``!")
+                else:
+                    await ctx.send(f":x: {sender.mention}, The language ``{newvar}`` is not present within my language file!")     
+            elif var == "guild_id": await ctx.send(f":x: I'm sorry, {sender.mention}, but that value cannot be changed.")
+            elif var == "prefix":
+                cursor.execute(f"UPDATE serversettings SET prefix = '{newvar}'")
+                db.commit()
+                await ctx.send(f":white_check_mark: {sender.mention} || The new prefix is ``{newvar}``")
+
+
+    @setting.error
+    async def settings_handler(self, ctx, error):
+        sender = ctx.message.author
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send(f":x: {sender.mention} || {getTranslation(sender.guild.id, 'errmsg', 'cmdNoPerms')}")
 
 
 def setup(bot):

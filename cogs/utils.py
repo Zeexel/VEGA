@@ -21,7 +21,6 @@ class Utils(commands.Cog):
     @commands.command(aliases=["getavatar", "pfp", "getpfp"])
     async def avatar(self, ctx, user: discord.Member=None):
         sender = ctx.message.author
-
         if user == None:
             await ctx.send("{} || Here's your avatar!".format(sender.mention))
             await ctx.send(sender.avatar_url)
@@ -31,9 +30,18 @@ class Utils(commands.Cog):
 
     @commands.command(aliases=['whois'])
     async def profile(self, ctx, user: discord.Member=None):
-
+        sender = ctx.message.author
         # Create embed
-        if user != None:
+        if isinstance(ctx.channel, discord.DMChannel):
+            embed = discord.Embed(title="{}#{} :robot:".format(sender.name, sender.discriminator) if sender.bot else "{}#{}".format(sender.name, sender.discriminator),
+                                  description="ID: " + str(sender.id),
+                                  color=0x858585)
+            embed.set_thumbnail(url=sender.avatar_url)
+
+            embed.add_field(name="Display Name", value=sender.display_name,
+                            inline=False)
+            embed.add_field(name="Joined Discord on", value=sender.created_at.strftime("%m/%d/%y"), inline=False)
+        elif user != None:
             embed = discord.Embed(title="{}#{} :robot:".format(user.name, user.discriminator) if user.bot else "{}#{}".format(user.name, user.discriminator),
                                   description="ID: " + str(user.id),
                                   color=user.top_role.colour)
@@ -44,10 +52,8 @@ class Utils(commands.Cog):
             embed.add_field(name="Joined the server on", value=user.joined_at.strftime("%m/%d/%y"), inline=False)
             embed.add_field(name="Joined Discord on", value=user.created_at.strftime("%m/%d/%y"), inline=False)
             embed.add_field(name="Roles", value=", ".join([role.mention for role in user.roles]))
-
-            await ctx.send(embed=embed)
         else:
-            sender = ctx.message.author
+            
             embed = discord.Embed(title="{}#{} :robot:".format(sender.name, sender.discriminator) if sender.bot else "{}#{}".format(sender.name, sender.discriminator),
                                   description="ID: " + str(sender.id),
                                   color=sender.top_role.colour)
@@ -58,11 +64,12 @@ class Utils(commands.Cog):
             embed.add_field(name="Joined the server on", value=sender.joined_at.strftime("%m/%d/%y"), inline=False)
             embed.add_field(name="Joined Discord on", value=sender.created_at.strftime("%m/%d/%y"), inline=False)
             embed.add_field(name="Roles", value=", ".join([role.mention for role in sender.roles]))
+        
+        await ctx.send(embed=embed)
 
-            await ctx.send(embed=embed)
 
     @checks.server_only()
-    @commands.command()
+    @commands.command(aliases=['serverinfo'])
     async def guildinfo(self, ctx):
         guild = ctx.message.guild
 
@@ -87,6 +94,7 @@ class Utils(commands.Cog):
     @commands.command(aliases=['osu_stats', 'osu'])
     async def osustats(self, ctx, mode, user):
         try:
+            sender = ctx.message.author
             # TODO: Figure out if there's something like switch cases in python, this looks like YanDev's code
             if mode == "osu" or mode == "standard":       # OSU!
                 api_url = "https://osu.ppy.sh/api/get_user?k={key}&u={usr}&m={mode}".format(key=cfg['osu_api_key'],

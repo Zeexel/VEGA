@@ -14,7 +14,8 @@
             "cmdError": "It seems there was an error running your command. Try again, or contact the owner of the bot.",
             "nsfwNoRes": "I apologize, but I wasn't able to find anything with the tag(s)",
             "owmLocNotFound": "Sorry, I wasn't able to find the location",
-            "userNotFound": "Sorry, I wasn't able to find the user"
+            "userNotFound": "Sorry, I wasn't able to find the user",
+            "clrError": "I apologize, but the max amount of messages you can clear is 500."
         },
 
         "eightballRes": {
@@ -48,7 +49,16 @@
             "loveCalcFinal": "The final result of my calculation was",
             "loveCalculating": "Calculating..",
             "reddFooter": "If the image isn't showing up, click the title!",
+            "clrSuccess": "messages successfully cleared!",
             "ping": "Pong!"
+        },
+
+        "econ" : {
+            "createAcc": "Opening a UAC bank account for you,",
+            "accExists": "You seem to already have a bank account with the UAC,",
+            "accNeeded": "you need to open a bank account first!",
+            "user2NoAcc": "The user you mentioned doesn't seem to have a bank account registered with the UAC.",
+            "notEnoughMoney": "You don't have enough money for that,"
         }
     },
 
