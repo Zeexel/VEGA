@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-    <a href="https://kofi.com/Zeexel"><img alt="Ko-Fi" src="https://www.ko-fi.com/img/githubbutton_sm.svg"></a>
+    <a href="https://ko-fi.com/Zeexel"><img alt="Ko-Fi" src="https://www.ko-fi.com/img/githubbutton_sm.svg"></a>
 </p>
 
 
