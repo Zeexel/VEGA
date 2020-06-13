@@ -47,7 +47,7 @@ class Nsfw(commands.Cog):
         if count < 1:
             image_count = count
 
-        images = []
+        
         image = data[random.randint(0, count)]      # Randomly choose an image from the site
 
         # Create embed
@@ -99,7 +99,7 @@ class Nsfw(commands.Cog):
         if count < 1:
             image_count = count
 
-        images = []
+        
         image = data[random.randint(0, count)]
 
         # Create embed
@@ -149,7 +149,7 @@ class Nsfw(commands.Cog):
         if count < 1:
             image_count = count
 
-        images = []
+        
         post = data[random.randint(0, count)]      # Randomly choose an image from the site
 
         # Create embed

@@ -1,9 +1,6 @@
 
 import json
 import os
-import datetime
-import time
-import psutil
 import discord
 import sqlite3
 import utils.checks as checks
@@ -21,7 +18,6 @@ def getPrefix(bot, m):
     else: return ">>"
             
 cfg = json.load(open("JSON/config.json", "r"))      # Config file
-start_time = time.time()
 bot = commands.Bot(command_prefix=getPrefix)
 bot.remove_command('help')      # Disable the default help command to replace it with the custom one
 
