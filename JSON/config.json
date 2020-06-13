@@ -1,6 +1,5 @@
 {
   "token": "BOT_TOKEN_HERE",
-  "prefix": ">>",
   "inv_link": "INV_LINK_HERE",
   "version": "VER",
   "reddit_clientid": "PRAW_CLIENTID",

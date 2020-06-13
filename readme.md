@@ -3,10 +3,12 @@
     <a href="https://discord.gg/qrJzm5G"><img alt="Discord" src="https://img.shields.io/discord/635569649077190716"></a>
     <a><img alt="Requires.io" src="https://img.shields.io/requires/github/Zeexel/VEGA"></a>
     <a href="https://www.codacy.com/manual/Zeexel/VEGA?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Zeexel/VEGA&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/95663dcd5f944b18b2dceef4fe0a09f2"/></a>
+    <a href="https://top.gg/bot/618633293121847317" ><img src="https://top.gg/api/widget/status/618633293121847317.svg"alt="VEGA" />
+</a>
 </p>
 
 <p align="center">
-    <a href="https://kofi.com/Zeexel"><img alt="Ko-Fi" src="https://www.ko-fi.com/img/githubbutton_sm.svg"></a>
+    <a href="https://ko-fi.com/Zeexel"><img alt="Ko-Fi" src="https://www.ko-fi.com/img/githubbutton_sm.svg"></a>
 </p>
 
 
