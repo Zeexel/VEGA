@@ -21,7 +21,6 @@ class Economy(commands.Cog):
         # Execute some SQL to check if the user already has a bank account
         cursor.execute(f"SELECT user_id FROM economy WHERE user_id = '{sender.id}'")
         result = cursor.fetchone()
-        print(result)
         if result is None:
             await ctx.send(f"Opening a UAC bank account for you, {sender.mention}..\nPlease give me a moment..")
             
@@ -159,29 +158,22 @@ class Economy(commands.Cog):
         else:
             await ctx.send(f"Item ``{id}`` does not exist.")
 
-    @commands.command()
+
+    @commands.command(aliases=['store', 'market'])
     async def shop(self, ctx):
-        cursor.execute("SELECT * FROM store")
+        sender = ctx.message.author
+
+        # Get full list of items
+        cursor.execute(f"SELECT * FROM store")
         res = cursor.fetchall()
-        print(res)
 
-        embed = discord.Embed(title="UAC Item shop",
-                              color=0x47acff)
+        embed = discord.Embed(title="UAC Armaments", color=0xffcb3b)
+        embed.set_thumbnail(url="https://media.discordapp.net/attachments/626977378274377728/717135689657090089/uac_transparent.png?width=465&height=465")
+
         for item in res:
-            cursor.execute(f"SELECT item_name FROM store WHERE item_id = '{item[0]}'")
-            name = cursor.fetchone()
-            cursor.execute(f"SELECT price FROM store WHERE item_id = '{item[0]}'")
-            price = cursor.fetchone()
-            embed.add_field(name=name, value=f"💴 {price}", inline=False)
-
-        # TODO: Clean this up, make pages for shop
+            embed.add_field(name=item[1], value=item[2], inline=False)
 
         await ctx.send(embed=embed)
-
-    
-    @commands.command()
-    async def buy(self, ctx, *, name):
-        print("BUYyyyeyeybe")
             
 
 

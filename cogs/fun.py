@@ -6,8 +6,8 @@ import asyncio
 import praw
 import subprocess
 import discord
-from PIL import Image, ImageDraw, ImageFont
 from utils.functions import *
+import utils.checks as checks
 from datetime import datetime
 from discord.ext import commands
 
@@ -110,181 +110,89 @@ class Fun(commands.Cog):
         embed.set_footer(text=getTranslation(ctx.message.guild.id, 'generalRes', 'reddFooter'))
         await ctx.send(embed=embed)  # Send the embed
 
-    @commands.command(aliases=['flman'])
-    async def floridaman(self, ctx, *, title=None):
+    @commands.command()
+    async def hug(self, ctx, user: discord.Member):
         sender = ctx.message.author
-        img = Image.open('res/images/imagegeneration/flman/floridaman_template.png')
-        parts = json.load(open("JSON/parts.json"))
-
-        person_images = [
-            'res/images/imagegeneration/flman/deathgrips.jpg',
-            'res/images/imagegeneration/flman/neckbeard.jpg',
-            'res/images/imagegeneration/flman/niggaskissing.jpg',
-            'res/images/imagegeneration/flman/thickneck.jpg'
+        hug_files = [
+            discord.File('res/images/reactions/hug/hug1.gif'),
+            discord.File('res/images/reactions/hug/hug2.gif'),
+            discord.File('res/images/reactions/hug/hug3.gif'),
+            discord.File('res/images/reactions/hug/hug4.gif'),
+            discord.File('res/images/reactions/hug/hug5.gif'),
+            discord.File('res/images/reactions/hug/hug6.gif')
         ]
 
-        title = title
-
-        if title is None:
-            str1 = "{MW} {pt1} {pt2} {pt3}".format(MW=random.choice(["Florida Man", "Florida Woman", "Florida Couple"]),
-                                                   pt1=random.choice(parts['part1']),
-                                                   pt2=random.choice(parts['part2']),
-                                                   pt3=random.choice(parts['part3']))   # Generate a title based off the JSON file provided
-            author = "By " + random.choice(parts['authors'])    # Random author name
+        if user is not sender:
+            await ctx.send("{sndr} gave {usr} a hug!".format(sndr=sender.mention, usr=user.mention),
+                           file=random.choice(hug_files))
         else:
-            str1 = title    # Custom Title
-            author = "By " + random.choice(parts['authors'])    # Random author name
+            await ctx.send("<:vega:618947299267182602> {} || I don't believe that's possible..".format(sender.mention))
 
-        person = Image.open(random.choice(person_images))
-        today = datetime.today()
-        now = datetime.now()
-
-        img.paste(person, (50, 225))
-
-        font1 = ImageFont.truetype("georgia.ttf", 32)
-        font2 = ImageFont.truetype("arial.ttf", 16)
-
-        draw = ImageDraw.Draw(img)
-        draw.text((20, 80), str1, font=font1, fill="black")
-        draw.text((95, 165), author, font=font2, fill="black")
-        draw.text((250, 165), today.strftime("%b %d, %Y").upper(), font=font2, fill="gray")
-        draw.text((360, 165), now.strftime("%I:%M %p"), font=font2, fill="gray")
-
-        print(str1)
-        img.save('res/images/imagegeneration/flman/floridaman.png')
-        await ctx.send(file=discord.File('res/images/imagegeneration/flman/floridaman.png'))
-
-    @commands.command(aliases=['scatman', 'scatland', 'scatworld'])
-    async def scatmansworld(self, ctx, img_url, *, line=None):
-        sender = ctx.message.author
-
-         # Add the title and caption to the image
-
-        img = Image.open('res/images/imagegeneration/scatmansworld/scatmans_world_base.jpg')
-        save_dir = 'res/images/imagegeneration/scatmansworld/scatmansworld.png'
-        W, H = (480, 360)   # Image width & height
-        draw = ImageDraw.Draw(img)
-        font1 = ImageFont.truetype("georgia.ttf", 25)
-        font2 = ImageFont.truetype("arial.ttf", 15)
-        line2 = None
-
-        if line is None:
-            await ctx.send(f":warning: {sender.mention}, {getTranslation(ctx.message.guild.id, 'errmsg', 'cmdInvalidParam')}" +
-            "\n``>>scatman [url] [title]")
-            return
-        
-        if '|' in line:
-            split = line.split('|')
-            line1 = split[0]
-            line2 = split[1]
-        else:
-            split = line.split('|')
-            line1 = split[0]
-
-            if len(split) > 2:
-                line1 = ' '.join(split[:2])
-                line2 = ' '.join(split[:1])
-            else:
-                line1 = split[0]
-                if len(split) > 1:
-                    line2 = ' '.join(split[1:])
-
-        if line2 is None:
-            line2 = ''
-
-        print("SCATMAN - Adding text..")
-
-        title = line1
-        caption = line2
-        w, h = draw.textsize(title, font=font1)     # Width & Height of the title based off the string size
-        w2, h2 = draw.textsize(caption, font=font2)     # Width & Height of the caption based off the string size
-
-        draw.text(((W-w)/2, 260), title, font=font1, fill="white")
-        draw.text(((W-w2)/2, 290), caption, font=font2, fill="white")
-
-        print("SCATMAN - String provided: " + title + caption)
-        print("SCATMAN - Caption & Text added!")
-
-        dl_img(img_url, 'res/images/imagegeneration/scatmansworld/fullsize.jpg')
-        print("SCATMAN - Image downloaded from\n" + img_url)
-
-        # Resize the image provided and paste it onto the template
-
-        fullsize_img_dir = "res/images/imagegeneration/scatmansworld/fullsize.jpg"
-        fullsize_img = Image.open(fullsize_img_dir)
-        fullsize_img = fullsize_img.resize((295, 185), Image.ANTIALIAS) # Resize the image w/ anti-aliasing
-
-        print("SCATMAN - Adding provided image & resizing it..")
-
-        img.paste(fullsize_img, (92, 65))
-
-        img.save(save_dir)  # Save it to a PNG file
-        print("SCATMAN - Image saved at \n " + save_dir)
-        print("SCATMAN - Sending Image")
-        await ctx.send(file=discord.File('res/images/imagegeneration/scatmansworld/scatmansworld.png'))
-
-    @scatmansworld.error
-    async def scatmansworld_handler(self, ctx, error):
+    @hug.error
+    async def hug_handler(self, ctx, error):
         sender = ctx.message.author
         if isinstance(error, commands.MissingRequiredArgument):
-            if error.param.name == 'img_url':
-                await ctx.send(f":warning: {sender.mention}, {getTranslation(ctx.message.guild.id, 'errmsg', 'cmdInvalidParam')}" +
-                "\n``>>scatman [url] [title]")
+            if error.param.name is 'user':
+                await ctx.send("<:vega:618947299267182602> {} || ".format(sender.mention)
+                               + "According to my calculations, it's impossible to hug the air.")
 
-    @commands.command(aliases=['jpeg', 'jpg', 'android'])
-    async def deepfry(self, ctx, url, quality=1):
-        print("DEEPFRY - Downloading image from " + url)
-        dl_img(url, 'res/images/imagegeneration/deepfry/notdeepfried.jpg')
-
-        img = Image.open('res/images/imagegeneration/deepfry/notdeepfried.jpg')
-        img.save('res/images/imagegeneration/deepfry/deepfried_img.jpg', quality=quality)
-        await ctx.send(file=discord.File('res/images/imagegeneration/deepfry/deepfried_img.jpg'))
 
     @commands.command()
-    async def absolutelydisgusting(self, ctx, url):
-        save_dir = 'res/images/imagegeneration/absolutelydisgusting/absolutelydisgusting.png'
+    async def kiss(self, ctx, user: discord.Member):
+        sender = ctx.message.author
+        kiss_files = [
+            discord.File('res/images/reactions/kiss/kiss1.gif'),
+            discord.File('res/images/reactions/kiss/kiss2.gif'),
+            discord.File('res/images/reactions/kiss/kiss3.gif'),
+            discord.File('res/images/reactions/kiss/kiss4.gif'),
+            discord.File('res/images/reactions/kiss/kiss5.gif'),
+            discord.File('res/images/reactions/kiss/kiss6.gif')
+        ]
 
-        dl_img(url, 'res/images/imagegeneration/absolutelydisgusting/fullsize.jpg')
 
-        img = Image.open('res/images/imagegeneration/absolutelydisgusting/AD_template.jpg')
-        fullsize = Image.open('res/images/imagegeneration/absolutelydisgusting/fullsize.jpg')
-        fullsize = fullsize.resize((273, 164), Image.ANTIALIAS)
+        if user is not sender:
+            await ctx.send("{sndr} kissed {usr}!".format(sndr=sender.mention, usr=user.mention),
+                            file=random.choice(kiss_files))
+        else:
+            await ctx.send("{} || {}"
+                            .format(sender.mention,
+                                    random.choice(['Would a mirror help?', "I don't think that's possible.."])))
 
-        img.paste(fullsize, (0, 0))
-        img.save(save_dir)
-
-        await ctx.send(file=discord.File(save_dir))
-
-    @absolutelydisgusting.error
-    async def absolutelydisgusting_handler(self, ctx, error):
+    @kiss.error
+    async def kiss_handler(self, ctx, error):
         sender = ctx.message.author
         if isinstance(error, commands.MissingRequiredArgument):
-            if error.param.name is 'url':
-                await ctx.send(f":warning: {sender.mention}, {getTranslation(ctx.message.guild.id, 'errmsg', 'cmdInvalidParam')}" +
-                "\n``>>absolutelydisgusting [url]")
+            if error.param.name is 'user':
+                await ctx.send("<:vega:618947299267182602> {} || ".format(sender.mention)
+                               + "According to my calculations, it's impossible to kiss the air.")
+
+    @checks.is_nsfw_channel()
+    @commands.command()
+    async def fuck(self, ctx, user: discord.Member):
+        sender = ctx.message.author
+
+        fuck_files = [
+            discord.File('res/images/reactions/fuck/fuck1.gif'),
+            discord.File('res/images/reactions/fuck/fuck2.gif'),
+            discord.File('res/images/reactions/fuck/fuck3.gif'),
+            discord.File('res/images/reactions/fuck/fuck4.gif'),
+            discord.File('res/images/reactions/fuck/fuck5.gif')
+        ]
+
+        if user is not sender:
+            await ctx.send("{sndr} fucked {usr}!"
+                            .format(sndr=sender.mention, usr=user.mention),
+                            file=random.choice(fuck_files))
+        else:
+            await ctx.send("{} || I think it's impossible to fuck yourself..".format(sender.mention))
     
-    @commands.command()
-    async def superhotchicks(self, ctx, url):
-        save_dir = 'res/images/imagegeneration/superhotchicks/hotchicks.png'
-        template_dir = 'res/images/imagegeneration/superhotchicks/hotchicks_template.jpg'
-
-        dl_img(url, 'res/images/imagegeneration/superhotchicks/fullsize.jpg')
-
-        img = Image.open(template_dir)
-        fullsize = Image.open('res/images/imagegeneration/superhotchicks/fullsize.jpg')
-        fullsize = fullsize.resize((74, 107), Image.ANTIALIAS)
-
-        img.paste(fullsize, (6, 3))
-        img.save(save_dir)
-        await ctx.send(file=discord.File(save_dir))
-
-    @superhotchicks.error
-    async def superhotchicks_handler(self, ctx, error):
+    @fuck.error
+    async def fuck_handler(self, ctx, error):
         sender = ctx.message.author
         if isinstance(error, commands.MissingRequiredArgument):
-            if error.param.name == 'url':
-                await ctx.send(f":warning: {sender.mention}, {getTranslation(ctx.message.guild.id, 'errmsg', 'cmdInvalidParam')}" +
-                "\n``>>absolutelydisgusting [url]")
+            if error.param.name is 'user':
+                await ctx.send(":x: {} || ".format(sender.mention)
+                               + "According to my calculations, it's impossible to fuck the air.")
 
 def setup(bot):
     bot.add_cog(Fun(bot))

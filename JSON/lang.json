@@ -62,6 +62,70 @@
         }
     },
 
+    "jp": {
+
+        "CREDIT": "James P. [Zeexel]",
+        "NOTES": "TudoXelaさんはほもです。",
+
+        "errmsg": {
+            "cmdNotFound": "Sorry, I wasn't able to find that command.",
+            "cmdDisabled": "I apologize, but that command has been disabled for the time being.",
+            "cmdDMDisabled": "I apologize, but that command is disabled in DM channels.",
+            "cmdNSFWErr": "This command can only be used in NSFW channels!",
+            "cmdInvalidParam": "There was an error in your input.",
+            "cmdNoPerms": "You dont have permission to use this command.",
+            "cmdError": "It seems there was an error running your command. Try again, or contact the owner of the bot.",
+            "nsfwNoRes": "I apologize, but I wasn't able to find anything with the tag(s)",
+            "owmLocNotFound": "Sorry, I wasn't able to find the location",
+            "userNotFound": "Sorry, I wasn't able to find the user",
+            "clrError": "I apologize, but the max amount of messages you can clear is 500."
+        },
+
+        "eightballRes": {
+            "1": "はい。",
+            "2": "According to the research done by the UAC, it is without a doubt.",
+            "3": "It is certain.",
+            "4": "You may rely on it.",
+            "5": "Our resarch points to.. Yes!",
+            "6": "Outlook good!",
+            "7": "いえ。",
+            "8": "Don't count on it.",
+            "9": "I'm very doubtful on that.",
+            "10": "Research concluded negative.",
+            "11": "I'm a bit busy at the moment..",
+            "12": "It's best if I don't tell you now.",
+            "13": "What? I wasn't paying attention.",
+            "14": "Ask me again later, please."
+        },
+
+        "headsTails": {
+            "1": "You landed heads.",
+            "2": "You got heads!",
+            "3": "The coin landed on heads.",
+            "4": "You landed tails.",
+            "5": "You got tails!",
+            "6": "The coin landed on tails."
+        },
+
+        "generalRes" : {
+            "coinFlipping": "配点。。",
+            "loveCalcFinal": "The final result of my calculation was",
+            "loveCalculating": "Calculating..",
+            "reddFooter": "If the image isn't showing up, click the title!",
+            "clrSuccess": "messages successfully cleared!",
+            "ping": "ポンぐ！"
+        },
+
+        "econ" : {
+            "createAcc": "Opening a UAC bank account for you,",
+            "accExists": "You seem to already have a bank account with the UAC,",
+            "accNeeded": "you need to open a bank account first!",
+            "user2NoAcc": "The user you mentioned doesn't seem to have a bank account registered with the UAC.",
+            "notEnoughMoney": "You don't have enough money for that,"
+        }
+    },
+
+
 
 
     "es": {

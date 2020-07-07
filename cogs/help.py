@@ -35,10 +35,9 @@ class Help(commands.Cog):
         funEmbed.add_field(name=">>flipacoin", value="Flips a coin. (NOTE: The UAC is not responsible for irresponsible gambling.)", inline=False)
         funEmbed.add_field(name=">>lovecalc [user1] [user2]", value="Calculates the love factor between two users.", inline=False)
         funEmbed.add_field(name=">>meme/animeme", value="Pulls random posts from r/dankmemes or r/animemes", inline=False)
-        funEmbed.add_field(name=">>scatmansworld [url] [title|subtitle]", value="BA BO BE", inline=False)
-        funEmbed.add_field(name=">>deepfry [url]", value="Severely deepfries the image given.", inline=False)
-        funEmbed.add_field(name=">>absolutelydisgusting [url]", value="Puts an image onto a meme template", inline=False)
-        funEmbed.add_field(name=">>superhotchicks [url]", value="Puts an image onto a meme template", inline=False)
+        funEmbed.add_field(name=">>hug [user]", value="Hug another user!", inline=False)
+        funEmbed.add_field(name=">>kiss [user]", value="Kiss another user!", inline=False)
+        funEmbed.add_field(name=">>fuck [user]", value="uwu **(Only works in NSFW channels)**", inline=False)
 
         modEmbed = Embed(title="Moderation Commands", color=0xfc6060)
         modEmbed.set_thumbnail(url='https://cdn.discordapp.com/avatars/618633293121847317/de4c54a0d734ff7b9ff17c729ddb589f.webp?size=1024')
@@ -67,8 +66,6 @@ class Help(commands.Cog):
             await ctx.send(embed=modEmbed)
         elif page == 'nsfw' or page == 'adult':
             await ctx.send(embed=nsfwEmbed)
-
-
 
 
 

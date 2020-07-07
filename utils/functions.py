@@ -25,3 +25,6 @@ def getTranslation(guildID, key1, key2):
         else:
             return lang['en'][key1][key2]
     except AttributeError: return lang['en'][key1][key2]
+
+    if guildID == None: 
+        return lang['en'][key1][key2]

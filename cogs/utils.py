@@ -67,7 +67,6 @@ class Utils(commands.Cog):
         
         await ctx.send(embed=embed)
 
-
     @checks.server_only()
     @commands.command(aliases=['serverinfo'])
     async def guildinfo(self, ctx):
@@ -90,75 +89,43 @@ class Utils(commands.Cog):
         sender = ctx.message.author
         if isinstance(error, checks.NoDM):
             await ctx.send(f"{sender.mention} || This command has been disabled for DM channels.")
-            
-    @commands.command(aliases=['osu_stats', 'osu'])
-    async def osustats(self, ctx, mode, user):
+
+    @commands.command(aliases=['osu'])
+    async def osustats(self, ctx, m, *, user):
+        s = ctx.message.author
+        modes = {'osu':'0','taiko':'1','ctb':'2','mania':'3'}   # Wow, this is way better than spamming 'elif' statements!
+        print(modes.get(m.lower()))
         try:
-            sender = ctx.message.author
-            # TODO: Figure out if there's something like switch cases in python, this looks like YanDev's code
-            if mode == "osu" or mode == "standard":       # OSU!
-                api_url = "https://osu.ppy.sh/api/get_user?k={key}&u={usr}&m={mode}".format(key=cfg['osu_api_key'],
-                                                                                            usr=user,
-                                                                                            mode=0)
-                response = requests.get(url=api_url)
-                data = response.json()
-                embed = discord.Embed(title="OSU! stats for {usr}".format(usr=data[0]['username']),
-                                    description="ID {id}".format(id=data[0]['user_id']),
-                                    color=0xff8cd5)
-            elif mode == "taiko":     # Taiko
-                api_url = "https://osu.ppy.sh/api/get_user?k={key}&u={usr}&m={mode}".format(key=cfg['osu_api_key'],
-                                                                                            usr=user,
-                                                                                            mode=1)
-                response = requests.get(url=api_url)
-                data = response.json()
-                embed = discord.Embed(title="Taiko stats for {usr}".format(usr=data[0]['username']),
-                                    description="ID {id}".format(id=data[0]['user_id']),
-                                    color=0xff8cd5)
-            elif mode ==  "ctb" or mode == "CtB":     # CtB
-                api_url = "https://osu.ppy.sh/api/get_user?k={key}&u={usr}&m={mode}".format(key=cfg['osu_api_key'],
-                                                                                            usr=user,
-                                                                                            mode=2)
-                response = requests.get(url=api_url)
-                data = response.json()
-                embed = discord.Embed(title="CtB stats for {usr}".format(usr=data[0]['username']),
-                                    description="ID {id}".format(id=data[0]['user_id']),
-                                    color=0xff8cd5)
-            elif mode == "mania" or mode == "osu!mania":     # OSU!mania
-                api_url = "https://osu.ppy.sh/api/get_user?k={key}&u={usr}&m={mode}".format(key=cfg['osu_api_key'],
-                                                                                            usr=user,
-                                                                                            mode=3)
-                response = requests.get(url=api_url)
-                data = response.json()
-                embed = discord.Embed(title="OSU!mania stats for {usr}".format(usr=data[0]['username']),
-                                    description="ID {id}".format(id=data[0]['user_id']),
-                                    color=0xff8cd5)
+            d = requests.get(f"https://osu.ppy.sh/api/get_user?k={cfg['osu_api_key']}&m={modes.get(m.lower())}&u={user}").json()
 
+            osuEmbed = discord.Embed(title=f"Info for {d[0]['username']}", color=0xff8ae6,description=f"User ID: {d[0]['user_id']}")
+            osuEmbed.set_thumbnail(url=f"http://s.ppy.sh/a/{d[0]['user_id']}")
+            osuEmbed.add_field(name="Join Date (UTC)", value=f"{d[0]['join_date']}",inline=False)
+            osuEmbed.add_field(name='Level', value=f"{str(round(float(d[0]['level'])))}", inline=False)
+            osuEmbed.add_field(name='Beatmaps Played', value=f"{d[0]['playcount']}", inline=False)     #  Only counts ranked, approved, and loved beatmaps
+            osuEmbed.add_field(name='Accuracy', value=f"{d[0]['accuracy']}", inline=False)
+            osuEmbed.add_field(name='Country', value=f"{d[0]['country']}", inline=False)
+            osuEmbed.add_field(name='S Ranks', value=f"{d[0]['count_rank_s']}")    # Counts for SS/SSH/S/SH/A ranks on maps
+            osuEmbed.add_field(name='A ranks', value=f"{d[0]['count_rank_a']}")
+            osuEmbed.set_footer(text=f"{d[0]['username']} - Rank {d[0]['pp_rank']} Globally, {d[0]['pp_country_rank']} in {d[0]['country']}", icon_url=f"http://s.ppy.sh/a/{d[0]['user_id']}")
 
-            embed.set_thumbnail(url='https://upload.wikimedia.org/wikipedia/commons/d/d3/Osu%21Logo_%282015%29.png')
-
-            embed.add_field(name="Joined OSU on", value=data[0]['join_date'])
-            embed.add_field(name="Hours played", value="{hrs}"      # Divide seconds by 3600 to get total hours played
-                            .format(hrs=round(int(data[0]['total_seconds_played']) / 3600)))
-            embed.add_field(name="Beatmaps Played", value=data[0]['playcount'])
-            embed.add_field(name="Overall Accuracy", value="{}%".format((math.floor(float(data[0]['accuracy']) * 100)/100.0)))
-            embed.add_field(name="Level", value="{}".format(round(float(data[0]['level']))))
-            embed.add_field(name="Ranking in {xx}".format(xx=data[0]['country']),
-                            value=data[0]['pp_country_rank'])
-            embed.add_field(name="Total SS grades", value=data[0]['count_rank_ss'])
-            embed.add_field(name="Total S grades", value=data[0]['count_rank_s'])
-            embed.add_field(name="Total A grades", value=data[0]['count_rank_a'])
-
-            await ctx.send(embed=embed)
-
-        # NOTE: For some reason, the OSU api makes python throw an IndexError rather than a KeyError
-        except IndexError: await ctx.send(f":x: {sender.mention} || {getTranslation(ctx.message.guild.id, 'errmsg', 'userNotFound')} ``{user}``")
-        except KeyError: await ctx.send(f":x: {sender.mention} || {getTranslation(ctx.message.guild.id, 'errmsg', 'userNotFound')} ``{user}``")
-        # This is here because for whatever reason some calls fail and prevent integer values (e.g. hours) to parse correctly
-        except TypeError: await ctx.send(f":warning: {sender.mention} || {getTranslation(ctx.message.guild.id, 'errmsg', 'cmdError')}")
+            await ctx.send(embed=osuEmbed)
+        except TypeError:
+            if isinstance(ctx.channel, discord.DMChannel):
+                await ctx.send(f":x: {s.mention} || {getTranslation(None, 'errmsg', 'userNotFound')} ``{user}``")
+            else: await ctx.send(f":x: {s.mention} || {getTranslation(s.guild.id, 'errmsg', 'userNotFound')} ``{user}``")
+        except KeyError:
+            if isinstance(ctx.channel, discord.DMChannel):
+                await ctx.send(f":x: {s.mention} || {getTranslation(None, 'errmsg', 'cmdError')}")
+            else: await ctx.send(f":x: {s.mention} || {getTranslation(s.guild.id, 'errmsg', 'cmdError')}")
+        except IndexError:
+            if isinstance(ctx.channel, discord.DMChannel):
+                await ctx.send(f":x: {s.mention} || {getTranslation(None, 'errmsg', 'cmdError')}")
+            else: await ctx.send(f":x: {s.mention} || {getTranslation(s.guild.id, 'errmsg', 'cmdError')}")
 
     @commands.command(aliases=['mal'])
     async def myanimelist(self, ctx, type, title, *subtype):
-
+ 
         if type == "user":
             user = jikan.user(username=title)
             embed = discord.Embed(title=user['username'], url=user['url'], description=f"MAL User ID: {str(user['user_id'])}", color=0x2d58c4)

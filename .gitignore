@@ -1,5 +1,6 @@
 __pycache__/
 /utils/__pycache__/
+.vscode/
 
 /res/images/imagegeneration/absolutelydisgusting/*
 /res/images/imagegeneration/deepfry/*
