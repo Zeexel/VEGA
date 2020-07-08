@@ -1,4 +1,20 @@
 
+#                   !!! YOU SHOULDN'T BE BUILDING OFF THIS VERSION !!!
+"""
+    This version of the bot is for the rewrite of VEGA/はかせ
+    The primary goal of this version is to have the bot be more effecient, less bug ridden, and a general rewrite
+    of the codebase for my own sake, and the sake of others.
+
+    You shouldn't be building off this version due to the fact that alot of the code is still old/unorganized, and may be
+    generally bug-ridden.
+
+    If you've forked/cloned this version to help with the bot, thank you! Your help is greatly appreciated :>
+
+    ~ James P.
+"""
+
+
+
 import json
 import os
 import discord
@@ -22,20 +38,13 @@ bot = commands.Bot(command_prefix=getPrefix)
 bot.remove_command('help')      # Disable the default help command to replace it with the custom one
 
 extensions = [
-    'utils.error_handler',
-    'cogs.fun',
-    'cogs.reactions',
-    'cogs.utils',
-    'cogs.admin',
-    'cogs.economy',
-    'cogs.help',
-    'cogs.nsfw'
+    'cogs.utils'
 ]
 
 
 @bot.event
 async def on_ready():
-    activity = discord.Game(name=f">>cmds | Version {cfg['version']}")
+    activity = discord.Game(name=f">>cmds | Version {cfg['bot']['version']}")
     await bot.change_presence(status=discord.Status.online, activity=activity)
     print("(C) James P. 2020")
     print("I'm running discord.py version {},".format(discord.__version__))
@@ -149,4 +158,4 @@ for extension in extensions:
         print(f"Unable to load {extension}\n{exc}")
 
 
-bot.run(cfg['token'])   # Log into the bot
+bot.run(cfg['bot']['token'])   # Log into the bot
