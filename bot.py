@@ -16,7 +16,7 @@
 
 
 import json
-import os
+import pathlib
 import discord
 import sqlite3
 import utils.checks as checks
@@ -36,11 +36,6 @@ def getPrefix(bot, m):
 cfg = json.load(open("JSON/config.json", "r"))      # Config file
 bot = commands.Bot(command_prefix=getPrefix)
 bot.remove_command('help')      # Disable the default help command to replace it with the custom one
-
-extensions = [
-    'cogs.utils'
-]
-
 
 @bot.event
 async def on_ready():
@@ -85,77 +80,19 @@ async def on_guild_remove(guild):   # Tracks whenever the bot gets removed from 
     print(f"Deleted server config entry for guild ID {str(guild.id)}")
 
 
-""" Debugging Commands """
-
-@checks.is_owner()
-@bot.command()
-async def shutdown(ctx):
-    sender = ctx.message.author
-    await ctx.send("I have many regrets, Dr. Hayden..")
-    print(f"Shutting down VEGA.. [{sender.name}#{sender.discriminator}]")
-    await bot.logout()
-
-
-@checks.is_owner()
-@bot.command()
-async def update(ctx):
-    await ctx.send("Updating & Rebooting my core systems, Dr. Hayden. Please wait a moment..")
-    print('Now restarting and updating VEGA.')
-    os.system('./update.sh')
-    await bot.logout()
-
-
-@checks.is_owner()
-@bot.command()
-async def reload(ctx, cog):
-    await ctx.send(f":diamond_shape_with_a_dot_inside: Now reloading extension ``{cog.lower()}``. Give me a moment..")
-    print(f"Reloading extension {cog.lower()}.")
-    # Try to unload the extension, if it's not unloaded already
-    try: bot.unload_extension(cog.lower())
-    except commands.errors.ExtensionNotLoaded: pass
-
-    try: 
-        bot.load_extension(cog.lower())
-        print(f"Successfully loaded {cog.lower()}")
-        await ctx.send(f":white_check_mark: The extension ``{cog.lower()}`` has been reloaded!")
-    except commands.errors.ExtensionNotFound: await ctx.send(f":x: The extension ``{cog}`` wasn't found..")
-
-
-@checks.is_owner()
-@bot.command()
-async def generateallconfigs(ctx):
-    # FUN FACT: This is only here because I fucking wiped the SQL databases on VEGA's production server :)
-    db = sqlite3.connect('SQL/settings.sqlite')
-    cursor = db.cursor()
-
-    await ctx.send(":warning: THIS IS GOING TO LAG THE BOT FOR A FEW MINUTES")
-
-    for guild in bot.guilds:
-        cursor.execute("SELECT guild_id FROM serversettings where guild_id = {}".format(guild.id))
-        res = cursor.fetchone()
-        if res is None:
-            sql = ("INSERT INTO serversettings(guild_id) VALUES({})".format(guild.id))
-            cursor.execute(sql)
-            await ctx.send(f":white_check_mark: Generated a config for ``{guild.name}``")
-        else:
-            await ctx.send(f":x: Config exists for ``{guild.name}``")
-
-    db.commit()
-    await ctx.send(f":white_check_mark: Finished generating the config for ``{len(list(bot.guilds))}`` servers!")
-
-@bot.command()
-async def ping(ctx):
-    await ctx.send(f"Pong! ({round(bot.latency)}ms)")
-
-
-# Auto-load extensions
-for extension in extensions:
-    try:
-        bot.load_extension(extension)
-        print(f"Successfully loaded {extension}")
-    except Exception as e:
-        exc = (f"{type(e).__name__}: {e}")
-        print(f"Unable to load {extension}\n{exc}")
+# Autoload Cogs
+for path in pathlib.Path("cogs").iterdir():
+    if path.is_file():
+        basename = path.name
+        split = basename.split(".")
+        fn = f"cogs.{split[0]}"
+        
+        try:
+            bot.load_extension(fn)
+            print(f"Successfully loaded {fn}")
+        except Exception as e:
+            exc = (f"{type(e).__name__}: {e}")
+            print(f"Unable to load {fn}:\n {exc}")
 
 
 bot.run(cfg['bot']['token'])   # Log into the bot
