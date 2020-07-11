@@ -4,8 +4,10 @@ import json as j
 from math import floor
 import utils.checks as checks
 from discord.ext import commands
+from jikanpy import Jikan
 
 cfg = j.load(open('JSON/config.json', 'r'))
+jikan = Jikan()
 
 class Utilities(commands.Cog):
     def __init__(self, bot):
@@ -82,15 +84,59 @@ class Utilities(commands.Cog):
 
         await ctx.send(embed=osuEmbed)
         
-    # TODO: Work on these
     @commands.command()
-    async def weather(self, ctx):
-        pass
+    async def weather(self, ctx, *, city):
+        try:
+            data = r.get(f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={cfg['api_keys']['weather_key']}").json()
+            icon = f"https://openweathermap.org/img/wn/{data['weather'][0]['icon']}@2x.png"
 
-    @commands.command()
-    async def mal(self, ctx, type, name):
-        pass
+            def convK2C(var):
+                C = var - 273.15
+                return f"{round(C)}°C"
+            
+            weatherEmbed = discord.Embed(title=f"Weather in {data['name']}, {data['sys']['country']}", color=0x616161, description=data['weather'][0]['main'])
+            weatherEmbed.set_thumbnail(url=icon)
+            weatherEmbed.set_footer(text="Data from OpenWeatherMap")
+            weatherEmbed.add_field(name="Temperature", value=convK2C(data['main']['temp']), inline=False)
+            weatherEmbed.add_field(name="Today's High", value=convK2C(data['main']['temp_max']), inline=False)
+            weatherEmbed.add_field(name="Today's low", value=convK2C(data['main']['temp_min']), inline=False)
 
+            await ctx.send(embed=weatherEmbed)
+        except KeyError: await ctx.send(":x: KeyError, this text must be localized.")
+
+    @commands.command(aliases=['mal'])
+    async def myanimelist(self, ctx, type, title, *subtype):
+        if type == "user":
+            user = jikan.user(username=title)
+            embed = discord.Embed(title=user['username'], url=user['url'], description=f"MAL User ID: {str(user['user_id'])}", color=0x2d58c4)
+            embed.set_thumbnail(url=user['image_url'])
+            embed.add_field(name='Mean Score', value=str(user['anime_stats']['mean_score']), inline=False)
+            embed.add_field(name='Watching', value=str(user['anime_stats']['watching']))
+            embed.add_field(name='On Hold', value=str(user['anime_stats']['on_hold']))
+            embed.add_field(name='Dropped', value=str(user['anime_stats']['dropped']))
+            embed.add_field(name='Completed', value=str(user['anime_stats']['completed']))
+            embed.add_field(name='Episodes Watched', value=str(user['anime_stats']['episodes_watched']))
+
+            await ctx.send(embed=embed)
+        else:
+            res = jikan.search(type, title)
+            embed = discord.Embed(title=res['results'][0]['title'], color=0x2d58c4, description="Scored " + str(res['results'][0]['score']), url=res['results'][0]['url'])
+            embed.set_thumbnail(url=res['results'][0]['image_url'])
+            embed.add_field(name='Synopsis', value=res['results'][0]['synopsis'], inline=False)
+
+            if type == "anime":
+                embed.add_field(name="Airing?", value="Yes" if res['results'][0]['airing'] == True else "No", inline=False)
+                embed.add_field(name='Episodes', value=str(res['results'][0]['episodes']), inline=False)
+
+            if type == "manga":
+                embed.add_field(name="Publishing?", value="Yes" if res['results'][0]['publishing'] == True else "No", inline=False)
+                embed.add_field(name="Chapters", value=str(res['results'][0]['chapters']), inline=False)
+                embed.add_field(name="Volumes", value=str(res['results'][0]['volumes']), inline=False)
+            
+            embed.add_field(name="Type", value=res['results'][0]['type'])
+            embed.add_field(name='MAL ID', value=str(res['results'][0]['mal_id']))
+
+            await ctx.send(embed=embed)
 
 def setup(bot):
     bot.add_cog(Utilities(bot))
