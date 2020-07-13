@@ -5,16 +5,12 @@
     The primary goal of this version is to have the bot be more effecient, less bug ridden, and a general rewrite
     of the codebase for my own sake, and the sake of others.
 
-    You shouldn't be building off this version due to the fact that alot of the code is still old/unorganized, and may be
-    generally bug-ridden.
+    You shouldn't be building off this version due to the fact that alot of the code is still unfinished, and is probably generally bug-ridden.
 
     If you've forked/cloned this version to help with the bot, thank you! Your help is greatly appreciated :>
 
     ~ James P.
 """
-
-
-
 import json
 import pathlib
 import discord
@@ -78,7 +74,6 @@ async def on_guild_remove(guild):   # Tracks whenever the bot gets removed from 
     cursor.execute(f"DELETE from serversettings where guild_id = '{guild.id}'")
     db.commit()
     print(f"Deleted server config entry for guild ID {str(guild.id)}")
-
 
 # Autoload Cogs
 for path in pathlib.Path("cogs").iterdir():
