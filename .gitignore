@@ -1,16 +1,14 @@
 __pycache__/
+cogs/__pycache__/
 /utils/__pycache__/
-.vscode
+venv/
+
 
 /res/images/imagegeneration/absolutelydisgusting/*
 /res/images/imagegeneration/deepfry/*
 /res/images/imagegeneration/flman/*
 /res/images/imagegeneration/scatmansworld/*
 /res/images/imagegeneration/superhotchicks/*
-
-/SQL/
-SQL/main.sqlite
-
 utils/__pycache__/checks.cpython-37.pyc
 utils/__pycache__/dl_img.cpython-37.pyc
 utils/__pycache__/error_handler.cpython-37.pyc
