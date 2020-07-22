@@ -42,11 +42,13 @@ class Voice(commands.Cog):
 
     @commands.command(aliases=['p'])
     async def play(self, ctx, *, url):
-        songThere = os.path.isfile(f'song-{ctx.guild.id}.mp3')
+        gid = ctx.guild.id
+        g = ctx.guild
+        songThere = os.path.isfile(f'song-{gid}.mp3')
 
         try:
             if songThere:
-                os.remove(f"./song-{ctx.guild.id}.mp3")
+                os.remove(f"./song-{gid}.mp3")
                 print("Removed previous song file..")
         except PermissionError:
             print("Permission is denied to remove the previous song file.")
@@ -54,7 +56,7 @@ class Voice(commands.Cog):
 
         await ctx.send(f"Getting song from url ``{url}``")
         
-        v = get(client.voice_clients, guild=ctx.guild)
+        v = get(client.voice_clients, guild=g)
 
         ydlOpts = {
             'format': 'bestaudio/best',
@@ -69,19 +71,19 @@ class Voice(commands.Cog):
             print(f"Downloading audio from {url}..")
             ydl.download([url])
 
-        for file in os.listdir("./"):
+        for file in os.listdir("../cogs/"):
             if file.endswith('.mp3'):
                 n = file
                 print(f"Renamed File: {n}")
-                os.rename(file, f'song-{ctx.guild.id}.mp3')
+                os.rename(file, f'song-{gid}.mp3')
 
-        v.play(discord.FFmpegPCMAudio(f"song-{ctx.guild.id}.mp3"), after=lambda e: print(f"Song finished playing in server {ctx.guild.id}"))
+        v.play(discord.FFmpegPCMAudio(f"song-{gid}.mp3"), after=lambda e: print(f"Song finished playing in server {gid}"))
         v.source = discord.PCMVolumeTransformer(v.source)
-        v.source.value = 0.07   # NOTE: Do not go above this for the sake of your ears.
+        v.source.value = 0.06   # NOTE: Do not go above this for the sake of your ears.
 
         nn = n.rsplit("-", 2)
         await ctx.send(f"Now playing {nn[0]}. Have fun!")
-        print(f"Now playing {nn[0]} in server {ctx.guild.id}")
+        print(f"Now playing {nn[0]} in server {gid}")
 
     @commands.command()
     async def pause(self, ctx):
